@@ -4,7 +4,7 @@ public class Blocks{
     public static void grass(int layer){
         switch(layer){
             case 1:
-                System.out.print("        ;. ");
+                System.out.print("        ;.");
                 return;
             case 2:
                 System.out.print("  .  ..   ");
@@ -13,7 +13,7 @@ public class Blocks{
                 System.out.print(" .   .   .");
                 return;
             case 4:
-                System.out.print("    .  :.  ");
+                System.out.print("    .  :. ");
                 return;
             default:
                 return;
