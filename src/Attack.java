@@ -7,6 +7,6 @@ public class Attack{
 
     Attack(int damage, int cost){
         this.damage = damage;
-        this.case = cost;
+        this.cost = cost;
     }
 }
