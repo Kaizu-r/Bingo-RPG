@@ -9,13 +9,14 @@ public class Main{
         int a, b;
         Scanner scan = new Scanner(System.in);
         do{
-            game.printGame();
-            System.out.println("                       :");
-            a = scan.nextInt();
-            b = scan.nextInt();
-            int r = game.roll(a, b);
-            Main.clear();
-
+            do{
+                game.printGame();
+                System.out.print("                       :");
+                a = scan.nextInt();
+                b = scan.nextInt();
+                Main.clear();
+            }while(a < 0 || b < 0 || a > 5 || b > 5 || game.bingo[a][b] != 0);
+            int ran = game.roll(a, b);
         }while(game.totalRolls != 25);
     }
 
