@@ -24,6 +24,31 @@ public class Game{
     //0 for locked, 1 grass, 2 enemy, 3 loot, 4 shrine, 5 elite, 6 boss
 
 
+    private int blockMake(){
+        int ran;
+        Random random = new Random();
+        int arr[] = {grassCount, enemyCount, lootCount};   //contains all enemies here
+
+        do{
+            ran = random.nextInt(9);
+            //playing with probabilities
+            if(ran < 5)
+                ran = 0;    //60% chance of grass
+            else if(ran < 8)
+                ran = 1;    //30% chance of enemy
+            else if(ran < 9)
+                ran = 2; //10% chance of loot
+        }while(arr[ran] == 0);  //roll again if its out of the thing
+
+        bingo[a][b] = ran + 1;
+        arr[ran]--; //decrease count
+
+        grassCount = arr[0];
+        enemyCount = arr[1];
+        lootCount = arr[2];
+        return ran;
+    }
+
     //returns whatever tile it is getting
     public int roll(int a, int b){
         if(totalRolls == 35){
@@ -48,28 +73,7 @@ public class Game{
         }
         rolls++;
         totalRolls++;
-        int ran;
-        Random random = new Random();
-                    //grass
-        int arr[] = {grassCount, enemyCount, lootCount};   //contains all enemies here
-
-        do{
-            ran = random.nextInt(9);
-            //playing with probabilities
-            if(ran < 5)
-                ran = 0;    //60% chance of grass
-            else if(ran < 8)
-                ran = 1;    //30% chance of enemy
-            else if(ran < 9)
-                ran = 2; //10% chance of loot
-        }while(arr[ran] == 0);  //roll again if its out of the thing
-
-        bingo[a][b] = ran + 1;
-        arr[ran]--; //decrease count
-
-        grassCount = arr[0];
-        enemyCount = arr[1];
-        lootCount = arr[2];
+        int ran = this.blockMake();
 
         return ran + 1;
     }
