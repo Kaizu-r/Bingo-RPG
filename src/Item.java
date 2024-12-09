@@ -7,14 +7,20 @@ public class Item{
     public int hp;
     public int armor;
     public int luck;
+    public int damageBonus;
 
-    public Item(String name, String[] sprite, int atk, int hp, int armor, int luck){
+
+    public Item(String name){
+        this.name = name;
+    }
+    public Item(String name, String[] sprite, int atk, int hp, int armor, int luck, int damageBonus){
         this.name = name;
         this.sprite = sprite;
         this.atk = atk;
         this.hp = hp;
         this.armor = armor;
         this.luck = luck;
+        this.damageBonus = damageBonus;
     }
 
 }
