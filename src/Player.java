@@ -103,6 +103,9 @@ public class Player extends Entity{
 
         equipped[index] = null;     //remove item from equipment
     }
+    public void pickWeapon(Weapon weapon){
+        equipment.add(weapon);
+    }
 
     public void equipWeapon(int location){
         if(this.weapon == null){
