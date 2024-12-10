@@ -4,6 +4,6 @@ public class Path{
     public String path;
 
     public Path(String type){
-        path = "bingo\\art\\" + type +".txt";
+        path = "./sprites/" + type +".txt";
     }
 }
