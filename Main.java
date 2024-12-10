@@ -17,7 +17,7 @@ public class Main{
                 Main.clear();
             }while(a < 0 || b < 0 || a > 5 || b > 5 || game.bingo[a][b] != 0);
             int ran = game.roll(a, b);
-        }while(game.totalRolls != 25);
+        }while(game.totalRolls != 36);
     }
 
     public static void clear(){
