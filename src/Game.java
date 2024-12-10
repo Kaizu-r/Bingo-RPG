@@ -24,7 +24,7 @@ public class Game{
     //0 for locked, 1 grass, 2 enemy, 3 loot, 4 shrine, 5 elite, 6 boss
 
 
-    private int blockMake(){
+    private int blockMake(int a, int b){
         int ran;
         Random random = new Random();
         int arr[] = {grassCount, enemyCount, lootCount};   //contains all enemies here
@@ -52,6 +52,7 @@ public class Game{
     //returns whatever tile it is getting
     public int roll(int a, int b){
         if(totalRolls == 35){
+            totalRolls++;
             bingo[a][b] = 6;
             return 6;   //boss fight
         }
@@ -63,17 +64,21 @@ public class Game{
         }
         if((totalRolls + 1)%6 == 0 && totalRolls >= 11){  //elite only after 11 rolls cuz we not evil
             rolls = 0;
+            totalRolls++;
             bingo[a][b] = 5;   //elite
             eliteCount--;
             return 5;
         }
-        if(totalRolls%6 == 0 && totalRolls > 11){   //guaranteed shrine after elite
+        if(rolls == 0 && totalRolls > 11){   //guaranteed shrine after elite
             shrineCount--;
-            return 3;
+            rolls++;
+            totalRolls++;
+            bingo[a][b] = 4;
+            return 4;
         }
         rolls++;
         totalRolls++;
-        int ran = this.blockMake();
+        int ran = this.blockMake(a, b);
 
         return ran + 1;
     }
