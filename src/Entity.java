@@ -7,7 +7,7 @@ import bingo.game.Path;
 import bingo.game.Attack;
 
 public abstract class Entity{
-    private Card card;
+    public Card card;
     public String name;
     public Sprite sprite;
     public boolean alive;
