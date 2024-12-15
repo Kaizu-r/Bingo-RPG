@@ -8,19 +8,48 @@ import bingo.game.Entity;
 
 public class Player extends Entity{
     private ArrayList<Item> inventory;
-    private int potionCount;
+    public int potionCount;
+    private int maxPotion;
     private Item[] equipped;
     private ArrayList<Weapon> equipment;
     private Weapon weapon;
+    public int maxHP;
+    public int potionStrength;
+    public int maxArmor;
+    public double maxDmgBonus;
     public int luck;    //for luck stuff
 
-    public Player(String name, int dmgBonus, int hp, int armor) throws IOException{
+    public Player(String name, double dmgBonus, int hp, int armor) throws IOException{
         super(name, dmgBonus, hp, armor, true);
+        maxHP = hp;
+        maxArmor = armor;
+        maxDmgBonus = dmgBonus;
         inventory = new ArrayList<Item>();
         equipment = new ArrayList<Weapon>();
         equipped = new Item[3];
+        maxPotion = 2;
         potionCount = 2;
-       
+        potionStrength = 20;
+    }
+
+    public void resetStats(){
+        hp = maxHP;
+        armor = maxArmor;
+        damageBonus = maxDmgBonus;
+        potionCount = maxPotion;
+    }
+    //permanent upgrades
+    public void healthPlus(int h){
+        maxHP += h;
+        hp += h;
+    }
+    public void armorPlus(int a){
+        maxArmor += a;
+        armor += a;
+    }
+    public void dmgBonusPlus(double d){
+        damageBonus += d;
+        maxDmgBonus += d;
     }
 
     public void pickup(Item item){
@@ -30,13 +59,13 @@ public class Player extends Entity{
     public boolean canMove(int move){
         switch(move){
             case 1:
-                return (match <= this.atk1.cost);
+                return (match >= this.atk1.cost);
             case 2:
-                return (match <= this.atk2.cost);
+                return (match >= this.atk2.cost);
             case 3: //potion
-                return(match <= 2);
+                return(match >= 2);
             default: //dodge
-                return(match <= 2);
+                return(match >= 2);
         }
     }
 
@@ -62,7 +91,7 @@ public class Player extends Entity{
                 if(potionCount == 0){
                     return 0;
                 }
-                this.heal(10);
+                this.heal(potionStrength);
                 potionCount--;
                 return 1;
             default:
@@ -70,6 +99,13 @@ public class Player extends Entity{
                 return 1;
 
         }
+    }
+    public void potionStrengthPlus(){
+        potionStrength += 20;
+    }
+    public void potionCountPlus(){
+        maxPotion++;
+        potionCount++;
     }
 
     public boolean canEquip(){
