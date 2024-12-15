@@ -11,7 +11,7 @@ public abstract class Entity{
     public String name;
     public Sprite sprite;
     public boolean alive;
-    public int damageBonus;
+    public double damageBonus;
     public int hp;
     public int maxHp;
     public int armor;
@@ -22,7 +22,7 @@ public abstract class Entity{
     public boolean dodging;
     public int match;  //number of nums that matched in the board thing
 
-    public Entity(String name, int damageBonus, int hp, int armor, boolean alive) throws IOException{
+    public Entity(String name, double damageBonus, int hp, int armor, boolean alive) throws IOException{
         this.name = name;
         this.damageBonus = damageBonus;
         this.maxHp = hp;
@@ -39,8 +39,11 @@ public abstract class Entity{
     }
 
     public void takeDamage(int damage){
-        this.hp -= damage - (armor >> 1);
+        if(damage <= (int)armor/5)
+            return;
+        this.hp -= damage - (int)(armor/5);
     }
+
 
     public void dodge(){
         dodging = true;
@@ -51,11 +54,11 @@ public abstract class Entity{
     public boolean canMove(int move){
         switch(move){
             case 0:
-                return (match <= atk1.cost);
+                return (match >= atk1.cost);
             case 1:
-                return (match <= atk2.cost);
+                return (match >= atk2.cost);
             default: //dodge
-                return(match <= 2);
+                return(match >= 2);
         }
     }
     //0 fail, 1 success
@@ -86,7 +89,9 @@ public abstract class Entity{
     }
 
     public int attack(Attack atk){
-        return atk.damage + (damageBonus * atk.damage);
+        armor += atk.armor;
+        damageBonus += atk.dmgBonus;
+        return atk.damage + (int)(damageBonus * atk.damage);
     }
     public void heal(int amount){
         this.hp += amount;
