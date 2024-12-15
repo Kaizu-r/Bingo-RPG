@@ -84,12 +84,12 @@ public class Game{
     }
 
     public void printGame(){
-        System.out.print("                                               ");
+        System.out.print("                                     ");
         System.out.println("         0        1         2         3         4        5");
         System.out.println();
         for(int i = 0; i < 6; i++){
             for(int k = 1; k < 5; k++){
-                System.out.print("                                               ");
+                System.out.print("                                     ");
                 if(k == 3)
                     System.out.print(i + "   ");
                 else
@@ -123,5 +123,31 @@ public class Game{
             }
         }
     }
+    public boolean checkRow(int a){
+        for(int j = 0; j<6; j++){
+            if(bingo[a][j] == 0)
+                return false;
+        }
+        return true;
+    }
+    public boolean checkColumn(int a){
+        for(int j = 0; j < 6; j++){
+            if(bingo[j][a] == 0)
+                return false;
+        }
+        return true;
+    }
+    public boolean checkDiagonal(int a, int b){
+        if(a != b)
+            return false;
+        for(int i = 0; i < 6; i++){
+            if(bingo[i][i] == 0)
+                return false;
+        }
+        return true;
+    }
+
+    
+
 
 }
