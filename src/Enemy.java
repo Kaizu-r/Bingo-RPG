@@ -6,7 +6,7 @@ import java.util.Random;
 import java.io.IOException;
 
 public class Enemy extends Entity{
-    public Enemy(String name, int damageBonus, int hp, int armor, boolean alive, Attack atk1, Attack atk2) throws IOException{
+    public Enemy(String name, double damageBonus, int hp, int armor, boolean alive, Attack atk1, Attack atk2) throws IOException{
         super(name, damageBonus, hp, armor, alive);
         this.atk1 = atk1;
         this.atk2 = atk2;
