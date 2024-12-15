@@ -24,7 +24,7 @@ public class Card{
                 int a;
                 do{
                     a = ran.nextInt(15);
-                }while(arr[a] != 0);
+                }while(arr[a] != 0 || allNums[a + k] != 0);
                 arr[a] = 1;
                 bingo[i][j] = a + 1 + k;
                 bingoOrig[i][j] = a + 1 + k;
@@ -58,16 +58,26 @@ public class Card{
         return randomNumber + 1;
     }
 
-    public void match(){
-        //linearly search if it matches
-        int i = (randomNumber)/15;   //only look at the correct "letter"
-        for(int j = 0; j < 5; j++){
-            if(bingo[i][j] == randomNumber + 1){
-                bingoCheck[i][j] = 1;
-                bingo[i][j] = 0;
-                matches++;
+    public void delete(){
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                allNums[bingoOrig[i][j] -1] = 0;
             }
         }
+    }
+
+    public void match(){
+        //linearly search if it matches
+        for(int i= 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                if(bingo[i][j] == randomNumber + 1){
+                    bingoCheck[i][j] = 1;
+                    bingo[i][j] = 0;
+                    matches++;
+            }
+        }
+        }
+        
     }
 
     public boolean checkRow(int i){
@@ -100,6 +110,18 @@ public class Card{
         return winner;
     }
 
+    public int numsLeft(){
+        int n = 0;
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                if(bingo[i][j] != 0){
+                    n++;
+                }
+            }
+        }
+        return n;
+    }
+
     public void printCard(){
         for(int i = 0; i < 5; i++){
             for(int j = 0; j < 5; j++){
@@ -107,5 +129,15 @@ public class Card{
             }
             System.out.println();
         }
+    }
+
+    public void resetDraw(){
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j<5; j++){
+                bingoCheck[i][j] = 0;
+            }
+        }
+        for(int i = 0; i < 75; i++)
+            selected[i] = 0;
     }
 }
