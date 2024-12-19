@@ -96,7 +96,9 @@ public class Card{
         return true;
     }
 
-    public boolean checkDiagonal(){
+    public boolean checkDiagonal(int loc, int loc1){
+        if(loc != loc1 || loc1 + loc != 4 )
+            return false;
         for(int i = 0; i < 5; i++){
             if(bingo[i][i] != 0)    //main diagonal
                 return false;
