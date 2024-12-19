@@ -93,7 +93,17 @@ public abstract class Entity{
         damageBonus += atk.dmgBonus;
         return atk.damage + (int)(damageBonus * atk.damage);
     }
+    public void armorBuff(){
+        armor += 5;
+    }
+    public void damageBuff(){
+        damageBonus += 0.3;
+    }
     public void heal(int amount){
+        if(this.hp + amount >= maxHp){
+            this.hp = maxHp;
+            return;
+        }
         this.hp += amount;
     }
     public void die(){
