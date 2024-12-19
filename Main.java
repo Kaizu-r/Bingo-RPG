@@ -7,8 +7,8 @@ import java.util.Scanner;
 public class Main{
     public static void main(String args[]) throws IOException{
         Player player = new Player("player", 0, 40, 5);
-        Attack atk1 = new Attack("Zoltrak", 10, 0, 0.1, 3);
-        Attack atk2 = new Attack("ligma", 30, 0, 0, 1);
+        Attack atk1 = new Attack("Pierce", 15, 0, 0.1, 2);
+        Attack atk2 = new Attack("Arc Slash", 20, 0, 0, 3);
         atk1.setDescription();
         atk2.setDescription();
         Weapon weapon = new Weapon("Journey's end", atk1, atk2);
@@ -22,15 +22,18 @@ public class Main{
         Scanner scan = new Scanner(System.in);
         mainMenu();
         Main.clear();
+        tutorial();
+        Main.clear();
         do{
             do{
                 game.printGame();
-                System.out.print("                                                                       :");
+                System.out.print("                                                         Input coordinates:");
                 a = scan.nextInt();
                 b = scan.nextInt();
             }while(a < 0 || b < 0 || a > 5 || b > 5 || game.bingo[a][b] != 0);
-            System.out.println("x");
             int ran = game.roll(a, b);
+            Main.clear();
+            game.printGame();
             if(game.checkRow(a)){
                 System.out.println("                                       Row formed!! Gained + 10 hp");
                 player.healthPlus(10);
@@ -66,6 +69,7 @@ public class Main{
                 Fight.wait(2000);
             }
             if(ran == 4)
+                System.out.println("                                       Health and Potions replenished!!");
                 player.hp = player.maxHP;
             if(ran == 5){
                 Fight.wait(2000);
@@ -93,6 +97,8 @@ public class Main{
                     Main.clear();
                 }
             }
+            player.resetArmor();
+            player.resetDmg();
             Main.clear();
         }while(game.totalRolls != 36 && player.alive);
 
@@ -127,14 +133,21 @@ public class Main{
         fight.printCards();
         player.card.matches = 0;
         skelly.card.matches = 0;
+        System.out.println();
         fight.printMoves();
-        System.out.print("Enter move here: ");
-        int a = scan.nextInt();
-
+        int a;
+        while(true){
+            System.out.print("Enter move here: ");
+            a = scan.nextInt();
+            if(a <=0 || a > 4)
+                System.out.println("Choice is not in the options.");
+            else
+                break;
+        }
+        
         arr = fight.roll();
         boolean b = player.canMove(a);
-        if(a == 3 && b)
-            player.heal(player.potionStrength);
+
         if(a == 4 && b)
             player.dodge();
         int e = skelly.move();
@@ -158,26 +171,33 @@ public class Main{
             for(int i = 0; i < 5; i++)
                 System.out.print(arr[i] + " ");
             System.out.println();
+            fight.printMatches();
             fight.printSprites();
             fight.printDesc(a, e, b, f);
+            fight.buff();
             fight.printHP();
             fight.printArmor();
             System.out.println();
             fight.printCards();
             System.out.println();
-            fight.printMatches();
+
             player.card.matches = 0;
             skelly.card.matches = 0;
             if(!skelly.alive || !player.alive)
                 break;
+            System.out.println();
             fight.printMoves();
-            System.out.print("Enter move here: ");
-            a = scan.nextInt();
+            while(true){
+                System.out.print("Enter move here: ");
+                a = scan.nextInt();
+                if(a <=0 || a > 4)
+                    System.out.println("Choice is not in the options.");
+                else
+                    break;
+            }
 
             arr = fight.roll();
             b = player.canMove(a);
-            if(a == 3 && b)
-                player.heal(player.potionStrength);
             if(a == 4 && b)
                 player.dodge();
             e = skelly.move();
@@ -217,14 +237,20 @@ public class Main{
         fight.printCards();
         player.card.matches = 0;
         skelly.card.matches = 0;
+        System.out.println();
         fight.printMoves();
-        System.out.print("Enter move here: ");
-        int a = scan.nextInt();
+        int a;
+        while(true){
+            System.out.print("Enter move here: ");
+            a = scan.nextInt();
+            if(a <=0 || a > 4)
+                System.out.println("Choice is not in the options.");
+            else
+                break;
+        }
 
         arr = fight.roll();
         boolean b = player.canMove(a);
-        if(a == 3 && b)
-            player.heal(player.potionStrength);
         if(a == 4 && b)
             player.dodge();
         int e = skelly.move();
@@ -248,26 +274,33 @@ public class Main{
             for(int i = 0; i < 5; i++)
                 System.out.print(arr[i] + " ");
             System.out.println();
+            fight.printMatches();
             fight.printSprites();
             fight.printDesc(a, e, b, f);
+            fight.buff();
             fight.printHP();
             fight.printArmor();
             System.out.println();
             fight.printCards();
             System.out.println();
-            fight.printMatches();
             player.card.matches = 0;
             skelly.card.matches = 0;
             if(!skelly.alive || !player.alive)
                 break;
+            System.out.println();
             fight.printMoves();
-            System.out.print("Enter move here: ");
-            a = scan.nextInt();
+            while(true){
+                System.out.print("Enter move here: ");
+                a = scan.nextInt();
+                if(a <=0 || a > 4)
+                    System.out.println("Choice is not in the options.");
+                else
+                    break;
+            }
 
             arr = fight.roll();
             b = player.canMove(a);
-            if(a == 3 && b)
-                player.heal(player.potionStrength);
+
             if(a == 4 && b)
                 player.dodge();
             e = skelly.move();
@@ -307,14 +340,20 @@ public class Main{
         fight.printCards();
         player.card.matches = 0;
         skelly.card.matches = 0;
+        System.out.println();
         fight.printMoves();
-        System.out.print("Enter move here: ");
-        int a = scan.nextInt();
+        int a;
+        while(true){
+            System.out.print("Enter move here: ");
+            a = scan.nextInt();
+            if(a <=0 || a > 4)
+                System.out.println("Choice is not in the options.");
+            else
+                break;
+        }
 
         arr = fight.roll();
         boolean b = player.canMove(a);
-        if(a == 3 && b)
-            player.heal(player.potionStrength);
         if(a == 4 && b)
             player.dodge();
         int e = skelly.move();
@@ -338,26 +377,34 @@ public class Main{
             for(int i = 0; i < 5; i++)
                 System.out.print(arr[i] + " ");
             System.out.println();
+            fight.printMatches();
             fight.printSprites();
             fight.printDesc(a, e, b, f);
+            fight.buff();
             fight.printHP();
             fight.printArmor();
             System.out.println();
             fight.printCards();
             System.out.println();
-            fight.printMatches();
+            
             player.card.matches = 0;
             skelly.card.matches = 0;
             if(!skelly.alive || !player.alive)
                 break;
+            System.out.println();
             fight.printMoves();
-            System.out.print("Enter move here: ");
-            a = scan.nextInt();
+            while(true){
+                System.out.print("Enter move here: ");
+                a = scan.nextInt();
+                if(a <=0 || a > 4)
+                    System.out.println("Choice is not in the options.");
+                else
+                    break;
+            }
 
             arr = fight.roll();
             b = player.canMove(a);
-            if(a == 3 && b)
-                player.heal(player.potionStrength);
+
             if(a == 4 && b)
                 player.dodge();
             e = skelly.move();
@@ -396,6 +443,39 @@ public class Main{
         System.out.println("                          :");
         Scanner scan = new Scanner(System.in);
         char a = scan.next().charAt(0);
+    }
+
+    static void tutorial(){
+        System.out.println("Input coordinates to reveal the tile!!!");
+        System.out.println("");
+        Fight.wait(3000);
+        System.out.println("Forming a row in the board inreases hp!!");
+        System.out.println("");
+        Fight.wait(3000);
+        System.out.println("Forming a column in the board increases armor!!");
+        System.out.println("");
+        Fight.wait(3000);
+        System.out.println("Forming a diagonal in the board increases damage!!!");
+        System.out.println("");
+        Fight.wait(3000);
+        System.out.println("Find chests to boost stats!!!");
+        System.out.println("");
+        Fight.wait(3000);
+        System.out.println("When fighting an enemy, be wise on which move to choose!!!!");
+        System.out.println("");
+        Fight.wait(3000);
+        System.out.println("Use potions when low in health");
+        System.out.println("");
+        Fight.wait(3000);
+        System.out.println("Elite enemies are dangerous!! Proceed with caution");
+        System.out.println("");
+        Fight.wait(3000);
+        System.out.println("Lost shrines replenish lost health. They are found after defeating an elite enemy");
+        System.out.println("");
+        Fight.wait(3000);
+        System.out.println("Out of potions?? Dodge to avoid an attack!!");
+        Fight.wait(3000);
+        System.out.println("Goodluck, traveller.");
     }
 
     static void died(){
