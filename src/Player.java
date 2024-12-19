@@ -51,6 +51,12 @@ public class Player extends Entity{
         damageBonus += d;
         maxDmgBonus += d;
     }
+    public void resetDmg(){
+        damageBonus = maxDmgBonus;
+    }
+    public void resetArmor(){
+        armor = maxArmor;
+    }
 
     public void pickup(Item item){
         inventory.add(item);
@@ -101,7 +107,7 @@ public class Player extends Entity{
         }
     }
     public void potionStrengthPlus(){
-        potionStrength += 20;
+        potionStrength += 4;
     }
     public void potionCountPlus(){
         maxPotion++;
