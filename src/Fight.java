@@ -7,10 +7,17 @@ import java.util.Random;
 public class Fight{
     private Player player;
     private Enemy enemy;
+    public boolean row[];
+    public boolean column[];
+    public boolean diagonal[];
+    public boolean blackout[];
 
     public Fight(Player player, Enemy enemy){
         this.player = player;
         this.enemy = enemy;
+        column = new boolean[2];
+        diagonal = new boolean[2];
+        row = new boolean[2];
     }
 
     public void printHP(){
@@ -60,24 +67,84 @@ public class Fight{
     public void printCards(){
         for(int i = 0; i < 5; i++){
             for(int j = 0; j < 5; j++){
-                System.out.print(String.format("|%2d", player.card.bingo[i][j]));
+                System.out.print(String.format("|%2d", player.card.bingo[j][i]));
             }
             System.out.print("                                                  ");
             for(int j = 0; j < 5; j++){
-                System.out.print(String.format("|%2d", enemy.card.bingo[i][j]));
+                System.out.print(String.format("|%2d", enemy.card.bingo[j][i]));
             }
             System.out.println();
         }
     }
 
+    public void buff(){
+        if(row[0]){
+            player.heal(5);
+            System.out.print("Row formed!! Healed 5hp                                       ");
+        }
+        else
+            System.out.print("                                                              ");
+        if(row[1]){
+            enemy.heal(5);
+            System.out.print("Row formed!! Healed 5hp                                       ");
+        }
+        System.out.println();
+        if(column[0]){
+            player.armorBuff();
+            System.out.print("Column formed!! Gained 5 armor                                ");
+        }
+        else
+            System.out.print("                                                              ");
+        if(column[1]){
+            enemy.armorBuff();
+            System.out.print("Column formed!! Gained 5 armor                                ");
+        }
+        System.out.println();
+        if(diagonal[0]){
+            player.damageBuff();
+            System.out.print("Column formed!! Gained 30% damage bonus                       ");
+        }
+        else
+            System.out.print("                                                              ");
+        if(diagonal[1]){
+            enemy.damageBuff(); 
+            System.out.print("Column formed!! Gained 30% damage bonus                       ");
+        }
+        System.out.println();  
+    }
+
+
+
     public int[] roll(){
         int[] arr = new int[5];
         Random ran = new Random();
-
+        int locX;
+        int locY = 0;
         for(int i = 0; i < 5; i++){
             arr[i] = Card.draw();
+            locX = (arr[i] - 1)%5;
+
+            for(int j = 0; j < 5; j++){
+                if(player.card.bingo[locX][j] == arr[i]){
+                    locY = j;
+                    break;
+                }
+            }
             player.card.match();
+            row[0] = player.card.checkColumn(locX);
+            column[0] = player.card.checkRow(locY);
+            diagonal[0] = player.card.checkDiagonal(locX, locY);
+            for(int j = 0; j < 5; j++){
+                if(enemy.card.bingo[locX][j] == arr[i]){
+                    locY = j;
+                    break;
+                }
+            }
             enemy.card.match();
+            row[1] = enemy.card.checkColumn(locX);
+            column[1] = enemy.card.checkRow(locY);
+            diagonal[1] = enemy.card.checkDiagonal(locX, locY);
+
         }
         player.match = player.card.matches;
         enemy.match = enemy.card.matches;
@@ -114,7 +181,7 @@ public class Fight{
     }
 
     public void reset(){
-        if(player.card.numsLeft() < 5 || enemy.card.numsLeft() < 5)
+        if(player.card.numsLeft() < 3 && enemy.card.numsLeft() < 3)
             resetCard();
     }
     public void printDesc(int pmove, int emove, boolean a, boolean b){
